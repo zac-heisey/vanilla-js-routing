@@ -19,3 +19,11 @@ body {
 	max-width: 40em;
 	width: 88%;
 }
+
+li {
+	list-style: none;
+}
+
+#list-name, #list-item, #new-list-items {
+	margin-bottom: 1.5rem;
+}
