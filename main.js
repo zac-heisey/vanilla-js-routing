@@ -26,12 +26,21 @@ var getParams = function (url) {
   // Main app component (renders homepage UI)
   var todoApp = new Reef('#app', {
     data: {
-      createListBtnText: 'Create a New Todo List',
-      myListBtnText: 'View My Lists',
+      myListBtnText: 'View Existing Lists',
       todoLists: ['Todo List 1', 'Todo List 2', 'Todo List 3']
     },
     template: function (data) {
-      var html = '<button id="create-list">' + data.createListBtnText + '</button><button id="view-lists">' + data.myListBtnText + '</button>';
+      var html = '</button><button id="view-lists">' + data.myListBtnText + '</button>' +
+      '<h2>Let\'s Create Your New Todo List!</h2>' +
+      '<form id="add-todolist">' +
+      '<label for="list-name">Name Your List</label><br>' +
+      '<input type="text" name="list-name" id="list-name" autofocus><br>' +
+      '<label for="add-items">Add Your Todo Items</label><br>' +
+      '<input type="text" name="list-item" id="list-item" placeholder="what needs to get done?">' +
+      '<button type="button" id="add-todo-btn">Add Todo</button><br>' +
+      '<div id="new-list-items"></div>' +
+      '<button type="submit" id="save-todo-list">Save My Todo List</button>'
+      '</form>';
       return html;
     }
   });
@@ -52,15 +61,27 @@ var getParams = function (url) {
   *** METHODS
   **/
 
-  // Create new list
-  var createList = function() {
-    app.innerHTML += '<h2>Let\'s Create Your New Todo List!</h2>' +
-    '<form id="add-todolist">' +
-    '<label for="list-name">Name Your List</label><br>' +
-    '<input type="text" name="list-name" id="list-name" autofocus><br>' +
-    '<input type="text" name="add" placeholder="Add a todo item to your new list">' +
-    '<button type="button" class="button">Add Todo</button>' +
-    '</form>';
+  // Save new list
+  var saveList = function() {
+    // TBD
+  }
+
+  // Display new list
+  var displayNewList = function() {
+    // Get todo item input
+    var todoListInput = document.querySelector('#list-item');
+    // Get new list items div element
+    var newListDiv = document.querySelector('#new-list-items');
+    // Create new checkbox + label elements to append to form
+    const li = document.createElement('li');
+    const input = document.createElement('input');
+    const label = document.createElement('label');
+    input.type = 'checkbox';
+    label.innerText = todoListInput.value;
+    todoListInput.value = '';
+    newListDiv.appendChild(li);
+    li.appendChild(input);
+    li.appendChild(label);
   }
 
   // Show existing lists
@@ -73,10 +94,9 @@ var getParams = function (url) {
   **/
 
   document.addEventListener('click', function(event) {
-    // Create new list
-    if (event.target.id === 'create-list') {
-      event.preventDefault();
-      createList();
+    // Display new list
+    if (event.target.id === 'add-todo-btn') {
+      displayNewList();
     }
     // View existing lists
     if (event.target.id === 'view-lists') {
