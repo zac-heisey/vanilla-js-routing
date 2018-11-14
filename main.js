@@ -23,7 +23,7 @@ var getParams = function (url) {
   *** APP COMPONENTS (using Reef.js)
   **/
 
-  // Main app component (renders homepage UI)
+  // Main app component (render homepage UI)
   var todoApp = new Reef('#app', {
     data: {
       myListBtnText: 'View Existing Lists',
@@ -44,7 +44,7 @@ var getParams = function (url) {
       return html;
     }
   });
-  // Todo lists component (renders lists UI)
+  // Todo lists component (render lists UI)
   var todoLists = new Reef('#app', {
     data: todoApp.data,
     template: function(data) {
@@ -72,7 +72,7 @@ var getParams = function (url) {
     var todoListInput = document.querySelector('#list-item');
     // Get new list items div element
     var newListDiv = document.querySelector('#new-list-items');
-    // Create new checkbox + label elements to append to form
+    // Create new checkbox + label elements to append to new list div
     const li = document.createElement('li');
     const input = document.createElement('input');
     const label = document.createElement('label');
