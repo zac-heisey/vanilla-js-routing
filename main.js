@@ -18,7 +18,7 @@ var getParams = function (url) {
     return params;
 };
 
-;(function() {
+
   /**
   *** APP COMPONENTS (using Reef.js)
   **/
@@ -29,7 +29,7 @@ var getParams = function (url) {
       myListBtnText: 'View Existing Lists',
       todoLists: ['Todo List 1', 'Todo List 2', 'Todo List 3']
     },
-    template: function (data) {
+    template: function(data) {
       var html = '</button><button id="view-lists">' + data.myListBtnText + '</button>' +
       '<h2>Let\'s Create Your New Todo List!</h2>' +
       '<form id="add-todolist">' +
@@ -39,7 +39,7 @@ var getParams = function (url) {
       '<input type="text" name="list-item" id="list-item" placeholder="what needs to get done?">' +
       '<button type="button" id="add-todo-btn">Add Todo</button><br>' +
       '<div id="new-list-items"></div>' +
-      '<button type="submit" id="save-todo-list">Save My Todo List</button>'
+      '<button type="submit" id="save-todo-btn">Save My Todo List</button>'
       '</form>';
       return html;
     }
@@ -49,7 +49,7 @@ var getParams = function (url) {
     data: todoApp.data,
     template: function(data) {
       var html = '<h2>My Existing Todo Lists</h2><ul>';
-      data.todoLists.forEach(function (todoList) {
+      data.todoLists.forEach(function(todoList) {
   			html += '<li>' + todoList + '</li>';
   		});
   		html += '</ul>';
@@ -63,7 +63,9 @@ var getParams = function (url) {
 
   // Save new list
   var saveList = function() {
-    // TBD
+    var newList = document.querySelector('#list-name');
+    var newListName = newList.value;
+    todoApp.data.todoLists.push(newListName);
   }
 
   // Display new list
@@ -102,6 +104,10 @@ var getParams = function (url) {
     if (event.target.id === 'view-lists') {
       showLists();
     }
+    // Save new list
+    if (event.target.id === 'save-todo-btn') {
+      saveList();
+    }
   });
 
   /**
@@ -120,5 +126,3 @@ var getParams = function (url) {
   if (page === 'lists') {
   	todoLists.render();
   }
-
-}());
