@@ -1,111 +1,64 @@
-(function() {
-  /**
-  *** APP COMPONENTS (using Reef.js)
-  **/
+/**
+ * Get the URL parameters
+ * source: https://css-tricks.com/snippets/javascript/get-url-variables/
+ * @param  {String} url The URL
+ * @return {Object}     The URL parameters
+ */
+var getParams = function (url) {
+  var params = {};
+  var parser = document.createElement('a');
+  url = url || window.location.href;
+  parser.href = url;
+  var query = parser.search.substring(1);
+  var vars = query.split('&');
+  for (var i=0; i < vars.length; i++) {
+      var pair = vars[i].split("=");
+      params[pair[0]] = decodeURIComponent(pair[1]);
+  }
+  return params;
+};
 
-  // Main app component (render homepage UI)
-  var todoApp = new Reef('#app', {
-    data: {
-      myListBtnText: 'View Existing Lists',
-      todoLists: ['Todo List 1', 'Todo List 2', 'Todo List 3']
-    },
-    template: function(data) {
-      var html = '</button><button id="view-lists">' + data.myListBtnText + '</button>' +
-      '<h2>Let\'s Create Your New Todo List!</h2>' +
-      '<form id="add-todolist">' +
-      '<label for="list-name">Name Your List</label><br>' +
-      '<input type="text" name="list-name" id="list-name" autofocus><br>' +
-      '<label for="add-items">Add Your Todo Items</label><br>' +
-      '<input type="text" name="list-item" id="list-item" placeholder="what needs to get done?">' +
-      '<button type="button" id="add-todo-btn">Add Todo</button><br>' +
-      '<div id="new-list-items"></div>' +
-      '<button type="submit" id="save-todo-btn">Save My Todo List</button>'
-      '</form>';
-      return html;
+// Get list name input field
+var listNameInput = document.querySelector('#list-name');
+// Get created lists div
+var createdLists = document.querySelector('#created-lists');
+
+listNameInput.addEventListener('keypress', function(event) {
+  // Get value of list name input field
+  var listNameValue = listNameInput.value;
+  // Create message variable
+  var newList;
+  if (event.which === 13) {
+    if (listNameValue.length > 0) {
+      newList = listNameValue;
+      addTodoList(newList);
     }
-  });
-  // Todo lists component (render lists UI)
-  var todoLists = new Reef('#app', {
-    data: todoApp.data,
-    template: function(data) {
-      var html = '<h2>My Existing Todo Lists</h2><ul>';
-      data.todoLists.forEach(function(todoList) {
-  			html += '<li>' + todoList + '</li>';
-  		});
-  		html += '</ul>';
-  		return html;
-    },
-  });
-
-  /**
-  *** METHODS
-  **/
-
-  // Save new list
-  var saveList = function() {
-    var newList = document.querySelector('#list-name');
-    var newListName = newList.value;
-    todoApp.data.todoLists.push(newListName);
-  }
-
-  // Display new list
-  var displayNewList = function() {
-    // Get todo item input
-    var todoListInput = document.querySelector('#list-item');
-    // Get new list items div element
-    var newListDiv = document.querySelector('#new-list-items');
-    // Create new checkbox + label elements to append to new list div
-    const li = document.createElement('li');
-    const input = document.createElement('input');
-    const label = document.createElement('label');
-    input.type = 'checkbox';
-    label.innerText = todoListInput.value;
-    todoListInput.value = '';
-    newListDiv.appendChild(li);
-    li.appendChild(input);
-    li.appendChild(label);
-  }
-
-  // Show existing lists
-  var showLists = function() {
-    location.assign('/lists/');
-  };
-
-  /**
-  *** EVENT HANDLERS
-  **/
-
-  document.addEventListener('click', function(event) {
+    // Prevent default behavior on 'enter' keypress
     event.preventDefault();
-    // Display new list
-    if (event.target.id === 'add-todo-btn') {
-      displayNewList();
-    }
-    // View existing lists
-    if (event.target.id === 'view-lists') {
-      showLists();
-    }
-    // Save new list
-    if (event.target.id === 'save-todo-btn') {
-      saveList();
-    }
-  });
-
-  /**
-  *** RENDER APP
-  **/
-
-  // Get the app container
-  var app = document.querySelector('[data-app]');
-  // Determine the view/UI (homepage or lists)
-  var page = app.getAttribute('data-app');
-
-  // Render the correct UI for todo app
-  if (page === 'homepage') {
-  	todoApp.render();
+    // Clear input field
+    listNameInput.value = "";
   }
-  if (page === 'lists') {
-  	todoLists.render();
-  }
+}, false);
 
-}());
+// Function to add todo list to created lists div
+function addTodoList(newList) {
+  // Creat url from list name
+  var listURL = newList.split(' ').join('%20');
+  // Create new <a> element to append to form
+  var a = document.createElement('a');
+  a.setAttribute('href', `/lists?list-name=${listURL}`);
+  // Add the message to the <a> element
+  a.innerText = newList;
+  // Add the <a> element to the created lists
+  createdLists.append(a);
+  // Store new list in local localStorage
+  var storedLists = createdLists.innerHTML;
+  localStorage.setItem('savedLists', storedLists);
+}
+
+// Check for saved lists in localStorage
+var getSavedLists = localStorage.getItem('savedLists');
+// Render saved lists to DOM
+if (getSavedLists) {
+  createdLists.innerHTML = getSavedLists;
+}
