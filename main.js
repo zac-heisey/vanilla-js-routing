@@ -76,6 +76,7 @@
   **/
 
   document.addEventListener('click', function(event) {
+    event.preventDefault();
     // Display new list
     if (event.target.id === 'add-todo-btn') {
       displayNewList();
@@ -106,5 +107,5 @@
   if (page === 'lists') {
   	todoLists.render();
   }
-  
+
 }());
