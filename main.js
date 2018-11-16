@@ -12,7 +12,7 @@ var getParams = function (url) {
   var query = parser.search.substring(1);
   var vars = query.split('&');
   for (var i=0; i < vars.length; i++) {
-      var pair = vars[i].split("=");
+      var pair = vars[i].split('=');
       params[pair[0]] = decodeURIComponent(pair[1]);
   }
   return params;
@@ -22,6 +22,8 @@ var getParams = function (url) {
 var listNameInput = document.querySelector('#list-name');
 // Get created lists div
 var createdLists = document.querySelector('#created-lists');
+// Get delete lists button
+var deleteLists = document.querySelector('#delete-lists');
 
 listNameInput.addEventListener('keypress', function(event) {
   // Get value of list name input field
@@ -36,7 +38,7 @@ listNameInput.addEventListener('keypress', function(event) {
     // Prevent default behavior on 'enter' keypress
     event.preventDefault();
     // Clear input field
-    listNameInput.value = "";
+    listNameInput.value = '';
   }
 }, false);
 
@@ -62,3 +64,12 @@ var getSavedLists = localStorage.getItem('savedLists');
 if (getSavedLists) {
   createdLists.innerHTML = getSavedLists;
 }
+
+// Clear lists from localStorage on button click
+deleteLists.addEventListener('click', function(event) {
+  // Bail if click is not on submit button
+  if (event.target.id !== 'delete-lists') return;
+  // Clear localStorage and createdLists HTML
+  localStorage.clear();
+  createdLists.innerHTML = '';
+}, false);
