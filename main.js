@@ -76,3 +76,9 @@ deleteLists.addEventListener('click', function(event) {
 
 // Render Individual Todo List Pages
 var params = getParams();
+
+if (params['list-name'] !== undefined) {
+  console.log('Params Defined - This is a list page');
+} else {
+  console.log('Params Undefined - This is the Homepage');
+}
