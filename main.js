@@ -74,11 +74,14 @@ deleteLists.addEventListener('click', function(event) {
   createdLists.innerHTML = '';
 }, false);
 
-// Render Individual Todo List Pages
+// Get query string data from URL
 var params = getParams();
-
+// Render individual todo list page
 if (params['list-name'] !== undefined) {
-  console.log('Params Defined - This is a list page');
-} else {
-  console.log('Params Undefined - This is the Homepage');
+  // Update sub-heading with current list title
+  var subHeading = document.getElementById('sub-heading');
+  subHeading.innerText = params['list-name'];
+  // Update input field label text
+  var listLabel = document.querySelector('label');
+  listLabel.innerText = 'Add a Todo Item to Your List';
 }
