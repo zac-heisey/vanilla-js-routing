@@ -48,7 +48,7 @@ function addTodoList(newList) {
   var listURL = newList.split(' ').join('%20');
   // Create new <a> element to append to form
   var a = document.createElement('a');
-  a.setAttribute('href', `/lists?list-name=${listURL}`);
+  a.setAttribute('href', `?list-name=${listURL}`);
   // Add the message to the <a> element
   a.innerText = newList;
   // Add the <a> element to the created lists
@@ -73,3 +73,6 @@ deleteLists.addEventListener('click', function(event) {
   localStorage.clear();
   createdLists.innerHTML = '';
 }, false);
+
+// Render Individual Todo List Pages
+var params = getParams();
