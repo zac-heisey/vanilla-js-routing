@@ -24,6 +24,8 @@ var listNameInput = document.querySelector('#list-name');
 var createdLists = document.querySelector('#created-lists');
 // Get delete lists button
 var deleteLists = document.querySelector('#delete-lists');
+// Get query string data from URL
+var params = getParams();
 
 listNameInput.addEventListener('keypress', function(event) {
   // Get value of list name input field
@@ -31,9 +33,12 @@ listNameInput.addEventListener('keypress', function(event) {
   // Create message variable
   var newList;
   if (event.which === 13) {
-    if (listNameValue.length > 0) {
+    if (listNameValue.length > 0 && params['list-name'] === undefined) {
       newList = listNameValue;
       addTodoList(newList);
+    } else if (listNameValue.length > 0) {
+      newItem = listNameValue;
+      addTodoItem(newItem);
     }
     // Prevent default behavior on 'enter' keypress
     event.preventDefault();
@@ -49,7 +54,7 @@ function addTodoList(newList) {
   // Create new <a> element to append to form
   var a = document.createElement('a');
   a.setAttribute('href', `?list-name=${listURL}`);
-  // Add the message to the <a> element
+  // Add input text to the <a> element
   a.innerText = newList;
   // Add the <a> element to the created lists
   createdLists.append(a);
@@ -58,12 +63,29 @@ function addTodoList(newList) {
   localStorage.setItem('savedLists', storedLists);
 }
 
-// Check for saved lists in localStorage
-var getSavedLists = localStorage.getItem('savedLists');
-// Render saved lists to DOM
-if (getSavedLists) {
-  createdLists.innerHTML = getSavedLists;
+// Function to add todo list item to created list
+function addTodoItem(newItem) {
+  // Create new <li> element to append to list
+  var li = document.createElement('li');
+  // Add the input text to the <li> element
+  li.innerText = newItem;
+  // Add the <li> element to the created lists
+  createdLists.append(li);
+  // Store new list item in local localStorage
+  var storedListItems = createdLists.innerHTML;
+  localStorage.setItem('savedItems', storedListItems);
 }
+
+// Check for saved lists and todo items in localStorage
+var getSavedLists = localStorage.getItem('savedLists');
+var getSavedListItems = localStorage.getItem('savedItems');
+// Render saved lists to DOM
+if (getSavedLists && params['list-name'] === undefined) {
+  createdLists.innerHTML = getSavedLists;
+} else if (getSavedListItems) {
+  createdLists.innerHTML = getSavedListItems;
+}
+
 
 // Clear lists from localStorage on button click
 deleteLists.addEventListener('click', function(event) {
@@ -74,14 +96,16 @@ deleteLists.addEventListener('click', function(event) {
   createdLists.innerHTML = '';
 }, false);
 
-// Get query string data from URL
-var params = getParams();
 // Render individual todo list page
 if (params['list-name'] !== undefined) {
+  // Clear created-lists div
+  // createdLists.innerHTML = ''; -> Need to figure out how to locally store individual todo list items
   // Update sub-heading with current list title
   var subHeading = document.getElementById('sub-heading');
   subHeading.innerText = params['list-name'];
   // Update input field label text
   var listLabel = document.querySelector('label');
   listLabel.innerText = 'Add a Todo Item to Your List';
+  // Update delete button text
+  deleteLists.innerText = 'Delete All Todo Items';
 }
