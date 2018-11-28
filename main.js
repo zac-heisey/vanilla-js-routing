@@ -80,25 +80,6 @@ function addTodoItem(newItem) {
   localStorage.setItem('savedItems', JSON.stringify(params));
 }
 
-// Check for saved lists and todo items in localStorage
-var getSavedLists = localStorage.getItem('savedLists');
-var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
-// Render saved lists to DOM
-if (getSavedLists && params['list-name'] === undefined) {
-  createdLists.innerHTML = getSavedLists;
-} else if (getSavedListItems['list-name'] === params['list-name']) {
-  createdLists.innerHTML = getSavedListItems.markup;
-}
-
-// Clear lists from localStorage on button click
-deleteLists.addEventListener('click', function(event) {
-  // Bail if click is not on submit button
-  if (event.target.id !== 'delete-lists') return;
-  // Clear localStorage and createdLists HTML
-  localStorage.clear();
-  createdLists.innerHTML = '';
-}, false);
-
 // Render individual todo list page
 if (params['list-name'] !== undefined) {
   // Clear created-lists div
@@ -110,3 +91,23 @@ if (params['list-name'] !== undefined) {
   // Update delete button text
   deleteLists.innerText = 'Delete All Todo Items';
 }
+
+// Check for saved lists and todo items in localStorage
+var getSavedLists = localStorage.getItem('savedLists');
+var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
+// Render saved lists to DOM
+if (getSavedLists && params['list-name'] === undefined) {
+  createdLists.innerHTML = getSavedLists;
+}
+if (getSavedListItems['list-name'] === params['list-name']) {
+  createdLists.innerHTML = getSavedListItems.markup;
+}
+
+// Clear lists from localStorage on button click
+deleteLists.addEventListener('click', function(event) {
+  // Bail if click is not on submit button
+  if (event.target.id !== 'delete-lists') return;
+  // Clear localStorage and createdLists HTML
+  localStorage.clear();
+  createdLists.innerHTML = '';
+}, false);
