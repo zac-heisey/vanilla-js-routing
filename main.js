@@ -87,7 +87,6 @@ var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
 if (getSavedLists && params['list-name'] === undefined) {
   createdLists.innerHTML = getSavedLists;
 } else if (getSavedListItems['list-name'] === params['list-name']) {
-  console.log('MATCH!');
   createdLists.innerHTML = getSavedListItems.markup;
 }
 
