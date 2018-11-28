@@ -82,8 +82,6 @@ function addTodoItem(newItem) {
 
 // Render individual todo list page
 if (params['list-name'] !== undefined) {
-  // Clear created-lists div
-  // createdLists.innerHTML = ''; -> Need to figure out how to locally store individual todo list items
   // Update sub-heading with current list title
   subHeading.innerText = params['list-name'];
   // Update input field label text
