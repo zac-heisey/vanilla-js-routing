@@ -24,6 +24,10 @@ var listNameInput = document.querySelector('#list-name');
 var createdLists = document.querySelector('#created-lists');
 // Get delete lists button
 var deleteLists = document.querySelector('#delete-lists');
+// Get sub-heading
+var subHeading = document.getElementById('sub-heading');
+// Get list label
+var listLabel = document.querySelector('label');
 // Get query string data from URL
 var params = getParams();
 
@@ -86,7 +90,6 @@ if (getSavedLists && params['list-name'] === undefined) {
   createdLists.innerHTML = getSavedListItems;
 }
 
-
 // Clear lists from localStorage on button click
 deleteLists.addEventListener('click', function(event) {
   // Bail if click is not on submit button
@@ -101,10 +104,8 @@ if (params['list-name'] !== undefined) {
   // Clear created-lists div
   // createdLists.innerHTML = ''; -> Need to figure out how to locally store individual todo list items
   // Update sub-heading with current list title
-  var subHeading = document.getElementById('sub-heading');
   subHeading.innerText = params['list-name'];
   // Update input field label text
-  var listLabel = document.querySelector('label');
   listLabel.innerText = 'Add a Todo Item to Your List';
   // Update delete button text
   deleteLists.innerText = 'Delete All Todo Items';
