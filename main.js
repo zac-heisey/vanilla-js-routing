@@ -76,18 +76,18 @@ function addTodoItem(newItem) {
   // Add the <li> element to the created lists
   createdLists.append(li);
   // Store new list item in local localStorage
-  var storedListItems = createdLists.innerHTML;
-  localStorage.setItem('savedItems', storedListItems);
+  params.markup = createdLists.innerHTML;
+  localStorage.setItem('savedItems', JSON.stringify(params));
 }
 
 // Check for saved lists and todo items in localStorage
 var getSavedLists = localStorage.getItem('savedLists');
-var getSavedListItems = localStorage.getItem('savedItems');
+var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
 // Render saved lists to DOM
 if (getSavedLists && params['list-name'] === undefined) {
   createdLists.innerHTML = getSavedLists;
 } else if (getSavedListItems) {
-  createdLists.innerHTML = getSavedListItems;
+  createdLists.innerHTML = getSavedListItems.markup;
 }
 
 // Clear lists from localStorage on button click
