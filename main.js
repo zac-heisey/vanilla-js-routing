@@ -97,8 +97,12 @@ var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
 // Render saved lists to DOM
 if (getSavedLists && params['list-name'] === undefined) {
   createdLists.innerHTML = getSavedLists;
-} else if (getSavedListItems && getSavedListItems['list-name'] === params['list-name']) {
-  createdLists.innerHTML = getSavedListItems.markup;
+} else if (getSavedListItems && params['list-name'] !== undefined) {
+  for (var i = 0; i < getSavedListItems.length; i++) {
+    if (getSavedListItems[i].list === params['list-name']) {
+      createdLists.innerHTML = getSavedListItems[i].markup;
+    }
+  }
 }
 
 // Clear lists from localStorage on button click
