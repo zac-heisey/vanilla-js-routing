@@ -34,8 +34,7 @@ var params = getParams();
 listNameInput.addEventListener('keypress', function(event) {
   // Get value of list name input field
   var listNameValue = listNameInput.value;
-  // Create message variable
-  var newList;
+  // Listen for 'enter' keypress
   if (event.which === 13) {
     if (listNameValue.length > 0 && params['list-name'] === undefined) {
       newList = listNameValue;
@@ -76,9 +75,14 @@ function addTodoItem(newItem) {
   // Add the <li> element to the created lists
   createdLists.append(li);
   // Store new list item in localStorage
-  var listItems = [];
-  listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
-  localStorage.setItem('savedItems', JSON.stringify(listItems));
+  if (getSavedListItems) {
+    getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
+    localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+  } else {
+    var listItems = [];
+    listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
+    localStorage.setItem('savedItems', JSON.stringify(listItems));
+  }
 }
 
 // Render individual todo list page
