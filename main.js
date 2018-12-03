@@ -30,25 +30,19 @@ var subHeading = document.getElementById('sub-heading');
 var listLabel = document.querySelector('label');
 // Get query string data from URL
 var params = getParams();
-
-listNameInput.addEventListener('keypress', function(event) {
-  // Get value of list name input field
-  var listNameValue = listNameInput.value;
-  // Listen for 'enter' keypress
-  if (event.which === 13) {
-    if (listNameValue.length > 0 && params['list-name'] === undefined) {
-      newList = listNameValue;
-      addTodoList(newList);
-    } else if (listNameValue.length > 0) {
-      newItem = listNameValue;
-      addTodoItem(newItem);
+// Check for saved lists and todo items in localStorage
+var getSavedLists = localStorage.getItem('savedLists');
+var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
+// Render saved lists to DOM
+if (getSavedLists && params['list-name'] === undefined) {
+  createdLists.innerHTML = getSavedLists;
+} else if (getSavedListItems && params['list-name'] !== undefined) {
+  for (var i = 0; i < getSavedListItems.length; i++) {
+    if (getSavedListItems[i].list === params['list-name']) {
+      createdLists.innerHTML = getSavedListItems[i].markup;
     }
-    // Prevent default behavior on 'enter' keypress
-    event.preventDefault();
-    // Clear input field
-    listNameInput.value = '';
   }
-}, false);
+}
 
 // Function to add todo list to created lists div
 function addTodoList(newList) {
@@ -72,10 +66,10 @@ function addTodoItem(newItem) {
   var checkboxLabel = document.createElement('label');
   // Create new <input> element to append to checkboxLabel
   var checkboxInput = document.createElement('input');
-  // Add type attribute to checkbox input element
-  checkboxInput.setAttribute('type', 'checkbox');
   // Create new <span> element to append to checkboxInput
   var checkboxSpan = document.createElement('span');
+  // Add type attribute to checkbox input element
+  checkboxInput.setAttribute('type', 'checkbox');
   // Add new class to checkbox span element
   checkboxSpan.classList.add('todo-item');
   // Add the input field text to the checkboxSpan element
@@ -106,19 +100,25 @@ if (params['list-name'] !== undefined) {
   deleteLists.innerText = 'Delete All Todo Items';
 }
 
-// Check for saved lists and todo items in localStorage
-var getSavedLists = localStorage.getItem('savedLists');
-var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
-// Render saved lists to DOM
-if (getSavedLists && params['list-name'] === undefined) {
-  createdLists.innerHTML = getSavedLists;
-} else if (getSavedListItems && params['list-name'] !== undefined) {
-  for (var i = 0; i < getSavedListItems.length; i++) {
-    if (getSavedListItems[i].list === params['list-name']) {
-      createdLists.innerHTML = getSavedListItems[i].markup;
+// Listen for keypress event on list name input field
+listNameInput.addEventListener('keypress', function(event) {
+  // Get value of list name input field
+  var listNameValue = listNameInput.value;
+  // Check if 'enter' key is pressed
+  if (event.which === 13) {
+    if (listNameValue.length > 0 && params['list-name'] === undefined) {
+      newList = listNameValue;
+      addTodoList(newList);
+    } else if (listNameValue.length > 0) {
+      newItem = listNameValue;
+      addTodoItem(newItem);
     }
+    // Prevent default behavior on 'enter' keypress
+    event.preventDefault();
+    // Clear input field
+    listNameInput.value = '';
   }
-}
+}, false);
 
 // Clear lists from localStorage on button click
 deleteLists.addEventListener('click', function(event) {
