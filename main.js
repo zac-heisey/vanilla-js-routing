@@ -73,23 +73,9 @@ function addTodoList(newList) {
 
 // Function to add todo list item to created list
 function addTodoItem(newItem) {
-  // Create new <label> element to append to list
-  var checkboxLabel = document.createElement('label');
-  // Create new <input> element to append to checkboxLabel
-  var checkboxInput = document.createElement('input');
-  // Create new <span> element to append to checkboxInput
-  var checkboxSpan = document.createElement('span');
-  // Add type attribute to checkbox input element
-  checkboxInput.setAttribute('type', 'checkbox');
-  // Add new class to checkbox span element
-  checkboxSpan.classList.add('todo-item');
-  // Add the input field text to the checkboxSpan element
-  checkboxSpan.innerText = newItem;
-  // Append checkboxInput & checkboxSpan to checkboxLabel
-  checkboxLabel.append(checkboxInput);
-  checkboxLabel.append(checkboxSpan);
-  // Add the <label> element to the created lists
-  createdLists.append(checkboxLabel);
+  // Add new list item to createdLists markup
+  createdLists.innerHTML +=
+  `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`
   // Store new list item in localStorage
   if (getSavedListItems) {
     getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
