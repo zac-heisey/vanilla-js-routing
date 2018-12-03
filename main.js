@@ -33,6 +33,7 @@ var params = getParams();
 // Check for saved lists and todo items in localStorage
 var getSavedLists = localStorage.getItem('savedLists');
 var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
+
 // Render saved lists to DOM
 if (getSavedLists && params['list-name'] === undefined) {
   createdLists.innerHTML = getSavedLists;
@@ -42,6 +43,16 @@ if (getSavedLists && params['list-name'] === undefined) {
       createdLists.innerHTML = getSavedListItems[i].markup;
     }
   }
+}
+
+// Render individual todo list page
+if (params['list-name'] !== undefined) {
+  // Update sub-heading with current list title
+  subHeading.innerText = params['list-name'];
+  // Update input field label text
+  listLabel.innerText = 'Add a Todo Item to Your List';
+  // Update delete button text
+  deleteLists.innerText = 'Delete All Todo Items';
 }
 
 // Function to add todo list to created lists div
@@ -88,16 +99,6 @@ function addTodoItem(newItem) {
     listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
     localStorage.setItem('savedItems', JSON.stringify(listItems));
   }
-}
-
-// Render individual todo list page
-if (params['list-name'] !== undefined) {
-  // Update sub-heading with current list title
-  subHeading.innerText = params['list-name'];
-  // Update input field label text
-  listLabel.innerText = 'Add a Todo Item to Your List';
-  // Update delete button text
-  deleteLists.innerText = 'Delete All Todo Items';
 }
 
 // Listen for keypress event on list name input field
