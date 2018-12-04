@@ -105,14 +105,15 @@ listNameInput.addEventListener('keypress', function(event) {
 
 // Clear lists from localStorage on button click
 document.addEventListener('click', function(event) {
-  // if click is on delete button
+  // If click is on delete button
   if (event.target.id === 'delete-lists') {
     // Clear localStorage and createdLists HTML
     localStorage.clear();
     createdLists.innerHTML = '';
   }
-  // Check off list item
+  // If click is on checkbox input
   if (event.target.type === 'checkbox') {
+    // Toggle 'checked' class
     event.target.nextSibling.classList.toggle('checked');
   }
 }, false);
