@@ -104,10 +104,15 @@ listNameInput.addEventListener('keypress', function(event) {
 }, false);
 
 // Clear lists from localStorage on button click
-deleteLists.addEventListener('click', function(event) {
-  // Bail if click is not on submit button
-  if (event.target.id !== 'delete-lists') return;
-  // Clear localStorage and createdLists HTML
-  localStorage.clear();
-  createdLists.innerHTML = '';
+document.addEventListener('click', function(event) {
+  // if click is on delete button
+  if (event.target.id === 'delete-lists') {
+    // Clear localStorage and createdLists HTML
+    localStorage.clear();
+    createdLists.innerHTML = '';
+  }
+  // Check off list item
+  if (event.target.type === 'checkbox') {
+    event.target.nextSibling.classList.toggle('checked');
+  }
 }, false);
