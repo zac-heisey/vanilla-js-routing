@@ -59,13 +59,9 @@ if (params['list-name'] !== undefined) {
 function addTodoList(newList) {
   // Creat url from list name
   var listURL = newList.split(' ').join('%20');
-  // Create new <a> element to append to form
-  var a = document.createElement('a');
-  a.setAttribute('href', `?list-name=${listURL}`);
-  // Add input text to the <a> element
-  a.innerText = newList;
-  // Add the <a> element to the created lists
-  createdLists.append(a);
+  // Add new list to createdLists markup
+  createdLists.innerHTML +=
+  `<a href="?list-name=${listURL}">${newList}</a>`;
   // Store new list in local localStorage
   var storedLists = createdLists.innerHTML;
   localStorage.setItem('savedLists', storedLists);
