@@ -38,3 +38,8 @@ a, label {
 #created-lists {
 	margin-top: 1rem;
 }
+
+.checked {
+	text-decoration: line-through;
+	font-style: italic;
+}
