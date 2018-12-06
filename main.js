@@ -57,7 +57,7 @@ if (params['list-name'] !== undefined) {
 
 // Function to add todo list to created lists div
 function addTodoList(newList) {
-  // Creat url from list name
+  // Create url from list name
   var listURL = newList.split(' ').join('%20');
   // Add new list to createdLists markup
   createdLists.innerHTML +=
