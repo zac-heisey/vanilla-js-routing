@@ -82,9 +82,9 @@ function addTodoItem(newItem) {
     	return item.list;
     });
     // If a saved list name matches the current params list name...
-    if (listItems.indexOf(params["list-name"]) !== -1) {
+    if (listItems.indexOf(params['list-name']) !== -1) {
       // Update that list's todo items in localStorage
-      i = listItems.indexOf(params["list-name"]);
+      i = listItems.indexOf(params['list-name']);
       getSavedListItems[i].items.push(newItem);
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
     // Else push the new todo item(s) to localStorage
