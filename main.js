@@ -82,19 +82,18 @@ function addTodoItem(newItem) {
     if (listItems.indexOf(params["list-name"]) !== -1) {
       // Update that list's todo items in localStorage
       i = listItems.indexOf(params["list-name"]);
-      getSavedListItems[i].markup = createdLists.innerHTML;
+      getSavedListItems[i].items.push(newItem);
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
     // Else push the new todo item(s) to localStorage
     } else {
-      getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
+      getSavedListItems.push({ list: params['list-name'], items: [newItem] });
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
     }
   } else {
     // If there are no list items in localStorage, create & store new list item(s)
-    // (this will only run once, when the first todo item(s) are added)
-    var listItems = [];
-    listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
-    localStorage.setItem('savedItems', JSON.stringify(listItems));
+    getSavedListItems = [];
+    getSavedListItems.push({ list: params['list-name'], items: [newItem] });
+    localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
   }
 }
 
