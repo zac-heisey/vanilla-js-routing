@@ -72,11 +72,26 @@ function addTodoItem(newItem) {
   // Add new list item to createdLists markup
   createdLists.innerHTML +=
   `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`
-  // Store new list item in localStorage
+  // Check for existing list items in localStorage
   if (getSavedListItems) {
-    getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
-    localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+    // Return an array of saved list names
+    var listItems = getSavedListItems.map(function(item) {
+    	return item.list;
+    });
+    // If a saved list name matches the current params list name...
+    if (listItems.indexOf(params["list-name"]) !== -1) {
+      // Update that list's todo items in localStorage
+      i = listItems.indexOf(params["list-name"]);
+      getSavedListItems[i].markup = createdLists.innerHTML;
+      localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+    // Else push the new todo item(s) to localStorage
+    } else {
+      getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
+      localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+    }
   } else {
+    // If there aren no list items in localStorage, store new list item(s) in localStorage
+    // (this will only run once, when the first todo item(s) are added)
     var listItems = [];
     listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
     localStorage.setItem('savedItems', JSON.stringify(listItems));
