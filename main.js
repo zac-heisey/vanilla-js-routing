@@ -90,7 +90,7 @@ function addTodoItem(newItem) {
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
     }
   } else {
-    // If there aren no list items in localStorage, store new list item(s) in localStorage
+    // If there are no list items in localStorage, create & store new list item(s)
     // (this will only run once, when the first todo item(s) are added)
     var listItems = [];
     listItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
