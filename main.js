@@ -40,7 +40,10 @@ if (getSavedLists && params['list-name'] === undefined) {
 } else if (getSavedListItems && params['list-name'] !== undefined) {
   for (var i = 0; i < getSavedListItems.length; i++) {
     if (getSavedListItems[i].list === params['list-name']) {
-      createdLists.innerHTML = getSavedListItems[i].markup;
+      getSavedListItems[i].items.forEach(function(item) {
+        createdLists.innerHTML +=
+        `<label><input type="checkbox"><span class="todo-item">${item}</span></label>`;
+      });
     }
   }
 }
@@ -71,7 +74,7 @@ function addTodoList(newList) {
 function addTodoItem(newItem) {
   // Add new list item to createdLists markup
   createdLists.innerHTML +=
-  `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`
+  `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`;
   // Check for existing list items in localStorage
   if (getSavedListItems) {
     // Return an array of saved list names
