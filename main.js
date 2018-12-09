@@ -30,25 +30,21 @@ var subHeading = document.getElementById('sub-heading');
 var listLabel = document.querySelector('label');
 // Get query string data from URL
 var params = getParams();
-// Check for saved lists and todo items in localStorage
-var getSavedLists = localStorage.getItem('savedLists');
+// Check for saved todo lists and todo items in localStorage
 var getSavedListItems = JSON.parse(localStorage.getItem('savedItems'));
 
-// Render saved lists to DOM
-if (getSavedLists && params['list-name'] === undefined) {
-  createdLists.innerHTML = getSavedLists;
-} else if (getSavedListItems && params['list-name'] !== undefined) {
+// Render saved lists and todo items to DOM
+if (getSavedListItems) {
   for (var i = 0; i < getSavedListItems.length; i++) {
-    if (getSavedListItems[i].list === params['list-name']) {
-      getSavedListItems[i].items.forEach(function(item) {
-        createdLists.innerHTML +=
-        `<label><input type="checkbox"><span class="todo-item">${item}</span></label>`;
-      });
+    if (params['list-name'] === undefined) {
+      renderTodos(getSavedListItems[i].list);
+    } else if (params['list-name'] === getSavedListItems[i].list && getSavedListItems[i].items.length > 0) {
+      renderTodos(getSavedListItems[i].items[i]);
     }
   }
 }
 
-// Render individual todo list page
+// Render individual todo list page(s)
 if (params['list-name'] !== undefined) {
   // Update sub-heading with current list title
   subHeading.innerText = params['list-name'];
