@@ -39,7 +39,9 @@ if (getSavedListItems) {
     if (params['list-name'] === undefined) {
       renderTodos(getSavedListItems[i].list);
     } else if (params['list-name'] === getSavedListItems[i].list && getSavedListItems[i].items.length > 0) {
-      renderTodos(getSavedListItems[i].items[i]);
+      getSavedListItems[i].items.forEach(function(item) {
+        renderTodos(item);
+      });
     }
   }
 }
