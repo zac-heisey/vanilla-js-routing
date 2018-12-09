@@ -56,25 +56,30 @@ if (params['list-name'] !== undefined) {
   listLabel.innerText = 'Add a Todo Item to Your List';
   // Update delete button text
   deleteLists.innerText = 'Delete Completed Todo Items';
+  console.log('RAN: render todo list items page');
 }
 
-// Function to add todo list to created lists div
-function addTodoList(newList) {
-  // Create url from list name
-  var listURL = newList.split(' ').join('%20');
-  // Add new list to createdLists markup
-  createdLists.innerHTML +=
-  `<a href="?list-name=${listURL}">${newList}</a>`;
-  // Store new list in local localStorage
-  var storedLists = createdLists.innerHTML;
-  localStorage.setItem('savedLists', storedLists);
+// Create markup for todo list name(s) or list item(s) depending on URL params
+function renderTodos(newItem) {
+  if (params['list-name'] === undefined) {
+    // Create url from list name
+    var listURL = newItem.split(' ').join('%20');
+    // Add new list to createdLists markup
+    createdLists.innerHTML +=
+    `<a href="?list-name=${listURL}">${newItem}</a>`;
+    console.log('RAN: renderTodos 1');
+  } else {
+    // Add new list item to createdLists markup
+    createdLists.innerHTML +=
+    `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`;
+    console.log('RAN: renderTodos 2');
+  }
 }
 
-// Function to add todo list item to created list
-function addTodoItem(newItem) {
-  // Add new list item to createdLists markup
-  createdLists.innerHTML +=
-  `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`;
+// Add new todo list or list item
+function addTodo(newItem) {
+  // Run renderTodos function
+  renderTodos(newItem);
   // Check for existing list items in localStorage
   if (getSavedListItems) {
     // Return an array of saved list names
@@ -87,16 +92,19 @@ function addTodoItem(newItem) {
       i = listItems.indexOf(params['list-name']);
       getSavedListItems[i].items.push(newItem);
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+      console.log('RAN: getSavedListItems 1');
     // Else push the new todo item(s) to localStorage
     } else {
-      getSavedListItems.push({ list: params['list-name'], items: [newItem] });
+      getSavedListItems.push({ list: newItem, items: [] });
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+      console.log('RAN: getSavedListItems 2');
     }
   } else {
     // If there are no list items in localStorage, create & store new list item(s)
     getSavedListItems = [];
-    getSavedListItems.push({ list: params['list-name'], items: [newItem] });
+    getSavedListItems.push({ list: newItem, items: [] });
     localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+    console.log('RAN: getSavedListItems 3');
   }
 }
 
@@ -106,12 +114,9 @@ listNameInput.addEventListener('keypress', function(event) {
   var listNameValue = listNameInput.value;
   // Check if 'enter' key is pressed
   if (event.which === 13) {
-    if (listNameValue.length > 0 && params['list-name'] === undefined) {
-      newList = listNameValue;
-      addTodoList(newList);
-    } else if (listNameValue.length > 0) {
+    if (listNameValue.length > 0) {
       newItem = listNameValue;
-      addTodoItem(newItem);
+      addTodo(newItem);
     }
     // Prevent default behavior on 'enter' keypress
     event.preventDefault();
