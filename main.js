@@ -133,8 +133,5 @@ document.addEventListener('click', function(event) {
   if (event.target.type === 'checkbox') {
     // Toggle 'checked' class
     event.target.nextSibling.classList.toggle('checked');
-    // Update markup in localStorage
-    getSavedListItems.push({ list: params['list-name'], markup: createdLists.innerHTML });
-    localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
   }
 }, false);
