@@ -128,6 +128,7 @@ document.addEventListener('click', function(event) {
   // If click is on checkbox input
   if (event.target.type === 'checkbox') {
     // Toggle 'checked' class
+    event.target.toggleAttribute('checked');
     event.target.nextSibling.classList.toggle('checked');
   }
 }, false);
