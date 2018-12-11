@@ -117,7 +117,7 @@ listNameInput.addEventListener('keypress', function(event) {
   }
 }, false);
 
-// Clear lists from localStorage on button click
+// Listen for button clicks on document
 document.addEventListener('click', function(event) {
   // If click is on delete button
   if (event.target.id === 'delete-lists') {
