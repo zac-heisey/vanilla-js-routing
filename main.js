@@ -130,5 +130,11 @@ document.addEventListener('click', function(event) {
     // Toggle 'checked' class
     event.target.toggleAttribute('checked');
     event.target.nextSibling.classList.toggle('checked');
+    // CONTINUE WORKING ON FOR LOOP BELOW
+    for (var i = 0; i < getSavedListItems.length; i++) {
+      if (event.target.nextSibling.innerText === getSavedListItems[i].items[i].item) {
+        getSavedListItems[i].items[i].checked = true;
+      }
+    }
   }
 }, false);
