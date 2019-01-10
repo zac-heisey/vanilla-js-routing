@@ -40,7 +40,7 @@ if (getSavedListItems) {
       renderTodos(getSavedListItems[i].list);
     } else if (params['list-name'] === getSavedListItems[i].list && getSavedListItems[i].items.length > 0) {
       getSavedListItems[i].items.forEach(function(item) {
-        renderTodos(item);
+        renderTodos(item.item);
       });
     }
   }
@@ -85,7 +85,7 @@ function addTodo(newItem) {
     if (listItems.indexOf(params['list-name']) !== -1) {
       // Update that list's todo items in localStorage
       i = listItems.indexOf(params['list-name']);
-      getSavedListItems[i].items.push(newItem);
+      getSavedListItems[i].items.push({ item: newItem, checked: false });
       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
     // Else push the new todo item(s) to localStorage
     } else {
