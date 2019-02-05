@@ -53,7 +53,7 @@ if (params['list-name'] !== undefined) {
   // Update input field label text
   listLabel.innerText = 'Add a Todo Item to Your List';
   // Update delete button text
-  deleteLists.innerText = 'Delete Completed Todo Items';
+  deleteLists.innerText = 'Clear Completed Todo Items';
 }
 
 // Create markup for todo list name(s) or list item(s) depending on URL params
