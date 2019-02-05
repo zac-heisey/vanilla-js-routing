@@ -40,7 +40,7 @@ if (getSavedListItems) {
       renderTodos(getSavedListItems[i].list);
     } else if (params['list-name'] === getSavedListItems[i].list && getSavedListItems[i].items.length > 0) {
       getSavedListItems[i].items.forEach(function(item) {
-        renderTodos(item.item);
+        renderTodos(item.item, item.checked);
       });
     }
   }
@@ -57,13 +57,19 @@ if (params['list-name'] !== undefined) {
 }
 
 // Create markup for todo list name(s) or list item(s) depending on URL params
-function renderTodos(newItem) {
+function renderTodos(newItem, itemChecked) {
   if (params['list-name'] === undefined) {
     // Create url from list name
     var listURL = newItem.split(' ').join('%20');
     // Add new list to createdLists markup
     createdLists.innerHTML +=
     `<a href="?list-name=${listURL}">${newItem}</a>`;
+    return;
+  }
+  if (itemChecked === true) {
+    // Add list item to createdLists markup with checked styling
+    createdLists.innerHTML +=
+    `<label><input type="checkbox" checked><span class="todo-item checked">${newItem}</span></label>`;
   } else {
     // Add new list item to createdLists markup
     createdLists.innerHTML +=
