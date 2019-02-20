@@ -63,17 +63,17 @@ function renderTodos(newItem, itemChecked) {
     var listURL = newItem.split(' ').join('%20');
     // Add new list to createdLists markup
     createdLists.innerHTML +=
-    `<a href="?list-name=${listURL}">${newItem}</a>`;
+    `<li><a href="?list-name=${listURL}">${newItem}</a></li>`;
     return;
   }
   if (itemChecked === true) {
     // Add list item to createdLists markup with checked styling
     createdLists.innerHTML +=
-    `<label><input type="checkbox" checked><span class="todo-item checked">${newItem}</span><span class="edit-item"> ✏️</span></label>`;
+    `<li><label><input type="checkbox" checked><span class="todo-item checked">${newItem}</span></label><span class="edit-item"> ✏️</span></li>`;
   } else {
     // Add new list item to createdLists markup
     createdLists.innerHTML +=
-    `<label><input type="checkbox"><span class="todo-item">${newItem}</span><span class="edit-item"> ✏️</span></label>`;
+    `<li><label><input type="checkbox"><span class="todo-item">${newItem}</span></label><span class="edit-item"> ✏️</span></li>`;
   }
 }
 
