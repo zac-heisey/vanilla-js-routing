@@ -69,11 +69,11 @@ function renderTodos(newItem, itemChecked) {
   if (itemChecked === true) {
     // Add list item to createdLists markup with checked styling
     createdLists.innerHTML +=
-    `<label><input type="checkbox" checked><span class="todo-item checked">${newItem}</span></label>`;
+    `<label><input type="checkbox" checked><span class="todo-item checked">${newItem}</span><span class="edit-item"> ✏️</span></label>`;
   } else {
     // Add new list item to createdLists markup
     createdLists.innerHTML +=
-    `<label><input type="checkbox"><span class="todo-item">${newItem}</span></label>`;
+    `<label><input type="checkbox"><span class="todo-item">${newItem}</span><span class="edit-item"> ✏️</span></label>`;
   }
 }
 
