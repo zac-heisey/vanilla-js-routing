@@ -140,7 +140,7 @@ document.addEventListener('click', function(event) {
     // Loop through list items & update edited todo items
     for (var i = 0; i < getSavedListItems.length; i++) {
       getSavedListItems[i].items.forEach(function(item) {
-        if (pencil.previousSibling.lastElementChild.innerText === !item.item) {
+        if (pencil.previousSibling.lastElementChild.innerText !== item.item) {
           item.item = pencil.previousSibling.lastElementChild.innerText;
         }
         // Update localStorage
