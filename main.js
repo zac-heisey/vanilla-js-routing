@@ -132,22 +132,15 @@ document.addEventListener('click', function(event) {
     createdLists.innerHTML = '';
   }
 
-  // If click is on pencil icon => NEED TO FIX
-  // if (event.target.classList.contains('edit-item')) {
-  //   var pencil = event.target;
-  //   pencil.previousSibling.lastElementChild.setAttribute('contenteditable', true);
-  //   pencil.previousSibling.lastElementChild.focus();
-  //   // Loop through list items & update edited todo items
-  //   for (var i = 0; i < getSavedListItems.length; i++) {
-  //     getSavedListItems[i].items.forEach(function(item) {
-  //       if (pencil.previousSibling.lastElementChild.innerText !== item.item) {
-  //         item.item = pencil.previousSibling.lastElementChild.innerText;
-  //       }
-  //       // Update localStorage
-  //       localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
-  //     });
-  //   }
-  // }
+  // If click is on pencil icon
+  if (event.target.classList.contains('edit-item')) {
+    var pencil = event.target;
+    // Add contenteditable attribute to todo item
+    pencil.previousSibling.lastElementChild.setAttribute('contenteditable', true);
+    // Set focus on todo item
+    pencil.previousSibling.lastElementChild.focus();
+    currentTodo = pencil.previousSibling.lastElementChild.innerText;
+  }
 
   // If click is on checkbox input
   if (event.target.type === 'checkbox') {
@@ -167,4 +160,21 @@ document.addEventListener('click', function(event) {
       });
     }
   }
+}, false);
+
+// Listen for input changes on document => WIP
+document.addEventListener('input', function(event) {
+  // Bail if input changes are NOT on a todo item
+  if (!event.target.classList.contains('todo-item')) return;
+  updated = event.target.innerText;
+  // // Loop through list items & update edited todo items
+  // for (var i = 0; i < getSavedListItems.length; i++) {
+  //   getSavedListItems[i].items.forEach(function(item) {
+  //     if (updated !== item.item) {
+  //       item.item = updated;
+  //     }
+  //     // Update localStorage
+  //     localStorage.setItem('savedItems', JSON.stringify(getSavedListItems));
+  //   });
+  // }
 }, false);
