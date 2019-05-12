@@ -106,12 +106,12 @@ function addTodo(newItem) {
   }
 }
 
-// Listen for keypress event on list name input field
-listNameInput.addEventListener('keypress', function(event) {
+// Listen for keydown event on list name input field
+listNameInput.addEventListener('keydown', function(event) {
   // Get value of list name input field
   var listNameValue = listNameInput.value;
   // Check if 'enter' key is pressed
-  if (event.which === 13) {
+  if (event.key === 'Enter') {
     if (listNameValue.length > 0) {
       newItem = listNameValue;
       addTodo(newItem);
